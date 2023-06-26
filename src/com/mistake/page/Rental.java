@@ -9,9 +9,9 @@ class Rental {
     private Movie movie;
 
     private int daysRented;
-    private final int TWO = 2;
+    private final static int TWO = 2;
 
-    private final int THREE = 3;
+    private final static int THREE = 3;
 
     public Rental(Movie movie, int daysRented) {
         this.movie = movie;

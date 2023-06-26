@@ -24,9 +24,9 @@ public class Customer {
         return name;
     }
 
-    private final int TWO = 2;
+    private final static int TWO = 2;
 
-    private final int THREE = 3;
+    private final static int THREE = 3;
 
     /**
      * 第一版本
@@ -159,20 +159,24 @@ public class Customer {
     public String statement5() {
         double totalAmount = 0;
         Enumeration<Rental> rentals = this.rentals.elements();
-        String result = "Rental Record for " + getName() + "/n";
+        StringBuilder result = new StringBuilder();
+        result.append("Rental Record for " + getName() + "/n");
         while (rentals.hasMoreElements()) {
             Rental each = rentals.nextElement();
-            // 获取常客积分
-            result += "\t" + each.getMovie().getTitle() + "\t" + each.getCharge() + "\n";
+            result.append("\t" + each.getMovie().getTitle());
+            result.append("\t");
+            result.append(each.getCharge());
+            result.append("\n");
             totalAmount += each.getCharge();
         }
-        result += "Amount owed is " + getTotalCharge() + "/n";
-        result += "You earned " + getTotalFrequentRenterPoints() + "frequent renter points";
-        return result;
+        result.append("Amount owed is " + getTotalCharge() + "/n");
+        result.append("You earned " + getTotalFrequentRenterPoints() + "frequent renter points");
+        return result.toString();
     }
 
     /**
      * 查询获取总金额
+     *
      * @return double
      */
     private double getTotalCharge() {
@@ -187,11 +191,15 @@ public class Customer {
 
     /**
      * 查询积分
+     *
      * @return int
      */
     private int getTotalFrequentRenterPoints() {
         int result = 0;
         Enumeration<Rental> rentals = this.rentals.elements();
+        if (null == rentals) {
+            return 0;
+        }
         while (rentals.hasMoreElements()) {
             Rental each = rentals.nextElement();
             result += each.getFrequentRenterPoints();
